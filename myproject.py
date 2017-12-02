@@ -136,8 +136,8 @@ def processColor(value, emotion):
                     return #87BBE5
 
 def parse_tone(tone):
-    eTones = ['disgust','fear','joy','sadness']
-    eVals = [0,0,0,0]
+    eTones = ['disgust','fear','joy','sadness','anger']
+    eVals = [0,0,0,0,0]
     lTones = ['analytical','confident','tentative']
     lVals = [0,0,0]
     sTones = ['openness_big5', 'conscientiousness_big5', 'extraversion_big5', 'agreeableness_big5', 'emotional_range_big5']
@@ -281,4 +281,4 @@ def streamed_response():
     return Response(stream_with_context(generate()))
 
 if __name__ == "__main__":
-    application.run(host='0.0.0.0')
+    application.run(host='0.0.0.0:80')
