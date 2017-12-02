@@ -61,28 +61,27 @@ for line in myFile:
 
 
         # call the api here
-
+        print(analyze_tone(line))
         # log sentiment,
+        
 
 
 
 
-
-tone_analyzer = ToneAnalyzerV3(
-
-  username='31eed5f3-58e0-4739-a633-fa9cdb652848',
-
-  password='lJA5jjWG02iC',
-
-  version='12-01-2017'
-
-)
-
-
-
+#author:momen
 def analyze_tone(statement):
 
     tone = ''
+
+    tone_analyzer = ToneAnalyzerV3(
+    
+        username='31eed5f3-58e0-4739-a633-fa9cdb652848',
+
+        password='lJA5jjWG02iC',
+
+        version='12-01-2017'
+
+    )
 
     ## please fix the variable of the file being opened
 
@@ -94,4 +93,4 @@ def analyze_tone(statement):
 
     ##this is JSON being returned
 
-    print(json.dumps(tone, indent=2))
+    return(json.dumps(tone, indent=2))
