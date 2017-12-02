@@ -11,11 +11,65 @@ def analyze_tone(statement):
         version='2016-05-19'
     )
 
-    tone = tone_analyzer.tone(statement, tones='emotion, language, social', sentences='true',content_type='text/plain')
+    tone = tone_analyzer.tone(statement, tones='emotion, language, social', sentences='false',content_type='text/plain')
 
     ##this is JSON being returned
 
-    return(json.dumps(tone, indent=2))
+    return(tone)
+
+
+#jr
+def parse_tone(tone):
+    eTones = ['disgust','fear','joy','sadness']
+    eVals = [0,0,0,0]
+    lTones = ['analytical','confident','tentative']
+    lVals = [0,0,0]
+    sTones = ['openness_big5', 'conscientiousness_big5', 'extraversion_big5', 'agreeableness_big5', 'emotional_range_big5']
+    sVals = [0,0,0,0,0]
+
+    #return array
+    rArr = []
+
+    #ok so now to parse our json copying example here
+
+    for i in tone['document_tone']['tone_categories']:
+        for j in i['tones']:
+        
+            #process emotions
+            if i['category_name'] == 'Emotion Tone':
+                #print(j['tone_id'],"    ",j['score'])
+                for index, feel in enumerate(eTones, 0):
+                    if j['tone_id'] == feel:
+                        eTones[index] = j['score']
+
+            #process language 
+            if i['category_name'] == 'Language Tone':
+                #print(j['tone_id'],"    ",j['score'])
+                for index, feel in enumerate(lTones, 0):
+                    if j['tone_id'] == feel:
+                        lVals[index] = j['score']
+        
+            #process social
+            if i['category_name'] == 'Social Tone':
+                #print(j['tone_name'],"    ",j['score'])
+                for index, feel in enumerate(sTones, 0):
+                    if j['tone_id'] == feel:
+                        sVals[index] = j['score']
+    
+    #add everything to the return array
+    rArr.append(eTones)
+    rArr.append(eVals)
+    rArr.append(lTones)
+    rArr.append(lVals)
+    rArr.append(sTones)
+    rArr.append(sVals)
+
+    return rArr
+
+
+#def makeItJsonY(niceArray, text, name):
+    
+
 
 myFile = open("silenceOfLambs.txt", "r")
 names = []
@@ -24,6 +78,7 @@ noMatch = 0
 firstLine = 0
 index = 0
 usedName = 0
+
 
 for line in myFile:
     if firstLine == 0:
@@ -42,19 +97,25 @@ for line in myFile:
         firstLine = 1
     else:
         firstLine = 0
-        print(names[usedName], line)
         # call the api here
-        print(analyze_tone(line))
-        # log sentiment,
+        sentiments = parse_tone(analyze_tone(line))
+        # and log sentiment,
+        #now push to webbrowser
+        
+        #first turn to dictionaries
+        emotions = dict(zip(sentiments[0],sentiments[1]))
+        language = dict(zip(sentiments[2],sentiments[3]))
+        sentiment = dict(zip(sentiments[4],sentiments[5]))
 
+        #create json object
+        data = {}
+        data['emotions'] = emotions
+        data['language'] = language
+        data['sentiment'] = sentiment
 
-def parseTone(tone):
-    overallEmotions = []
-    sentenceEmotions = []
-    sentenceGradiant = []
+        data['text'] = line
 
-    data = json.load(open(tone))
-    documentTypeAnalysisLen = len(data)
-    tonesAnalysisLen = len(data["document_tone"]["tone_categories"][0]["tones"])
+        data['name'] = names[usedName]
 
-    for x in range(0, documentTypeAnalysisLen, 1):
+        json_data = json.dumps(data)
+        print(json_data)
