@@ -40,7 +40,7 @@ def parse_tone(tone):
                 #print(j['tone_id'],"    ",j['score'])
                 for index, feel in enumerate(eTones, 0):
                     if j['tone_id'] == feel:
-                        eTones[index] = j['score']
+                        eVals[index] = j['score']
 
             #process language 
             if i['category_name'] == 'Language Tone':
@@ -120,4 +120,7 @@ for line in myFile:
         #now push to webbrowser
 
         #array, text, name
-        makeItJsonY( )
+        print(makeItJsonY(sentiments, line, names[usedName]))
+
+        #send to web browser
+
