@@ -67,8 +67,25 @@ def parse_tone(tone):
     return rArr
 
 
-#def makeItJsonY(niceArray, text, name):
-    
+def makeItJsonY(niceArray, text, name):
+        #first turn to dictionaries
+        emotions = dict(zip(niceArray[0],niceArray[1]))
+        language = dict(zip(niceArray[2],niceArray[3]))
+        sentiment = dict(zip(niceArray[4],niceArray[5]))
+
+        #create json object
+        data = {}
+        data['emotions'] = emotions
+        data['language'] = language
+        data['sentiment'] = sentiment
+
+        data['text'] = text
+
+        data['name'] = name
+
+        json_data = json.dumps(data)    
+
+        return json_data
 
 
 myFile = open("silenceOfLambs.txt", "r")
@@ -101,21 +118,6 @@ for line in myFile:
         sentiments = parse_tone(analyze_tone(line))
         # and log sentiment,
         #now push to webbrowser
-        
-        #first turn to dictionaries
-        emotions = dict(zip(sentiments[0],sentiments[1]))
-        language = dict(zip(sentiments[2],sentiments[3]))
-        sentiment = dict(zip(sentiments[4],sentiments[5]))
 
-        #create json object
-        data = {}
-        data['emotions'] = emotions
-        data['language'] = language
-        data['sentiment'] = sentiment
-
-        data['text'] = line
-
-        data['name'] = names[usedName]
-
-        json_data = json.dumps(data)
-        print(json_data)
+        #array, text, name
+        makeItJsonY( )
