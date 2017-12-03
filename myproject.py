@@ -1,4 +1,4 @@
-from flask import Flask, stream_with_context, request, Response, url_for
+from flask import Flask, stream_with_context, request, Response, url_for, render_template
 
 import json
 import re
@@ -228,7 +228,7 @@ def makeItJsonY(niceArray, text, name):
 
 @application.route("/")
 def hello():
-    return "you want another page"
+    return render_template('index.html')
 
 
 @application.route('/stream')
@@ -298,12 +298,17 @@ def streamed_response():
                 yield '<br>'
                 yield '<br>'
                 yield json_data['name']
-                yield ":"
                 yield '<br>'
+                yield '<div class="bubble1">'
                 yield json_data['text']
+                yield '</div>'
+                yield '<br>'
                 yield '<br>'
                 yield str(json_data['emotions'][largestEmo])
     return Response(stream_with_context(generate()))
 
+#@application.route('/fbPoint')
+#add more later
+
 if __name__ == "__main__":
-    application.run(host='0.0.0.0:80')
+    application.run(host='0.0.0.0')
