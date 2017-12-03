@@ -83,57 +83,82 @@ def processColor(value, emotion):
 
         if value < .20:
 
-                    #return color 1
+            #return color 1
 
-                    return #CFCFB2
+            return #CFCFB2
 
-                if .2 <= value and value < .4:
+        if .2 <= value and value < .4:
 
-                    #color 2
+            #color 2
 
-                    return #DADBA8
+            return #DADBA8
 
-                if .4 <= value and value <.6:
+        if .4 <= value and value <.6:
 
-                    #col 3
+            #col 3
 
-                    return #E5E79F
+            return #E5E79F
 
-                if .6 <= value and value < .8:
+        if .6 <= value and value < .8:
 
-                    return #F0F395
+            return #F0F395
 
-                if .8 <= value and value < 1:
+        if .8 <= value and value < 1:
 
-                    return #FBFF8C
+            return #FBFF8C
 
     if emotion == 'sadness':
 
         if value < .20:
 
                     #return color 1
+            return  #B7C2C4
 
-                    return  #B7C2C4
+        if .2 <= value and value < .4:
+            #color 2
 
-                if .2 <= value and value < .4:
+            return #ABC0CC
 
-                    #color 2
+        if .4 <= value and value <.6:
 
-                    return #ABC0CC
+            #col 3
+            return #9FBED4
 
-                if .4 <= value and value <.6:
+        if .6 <= value and value < .8:
 
-                    #col 3
+            return #93BCDC
 
-                    return #9FBED4
+        if .8 <= value and value < 1:
 
-                if .6 <= value and value < .8:
+            return #87BBE5
 
-                    return #93BCDC
+    if emotion == 'anger':
 
-                if .8 <= value and value < 1:
+        if value < .20:
 
-                    return #87BBE5
+            #return color 1
+            return  #CAA099
+
+        if .2 <= value and value < .4:
+
+            #color 2
+
+            return #D17C77
+
+        if .4 <= value and value <.6:
+
+            #col 3
+
+            return #D75854
+
+        if .6 <= value and value < .8:
+
+            return #DE3332
+
+        if .8 <= value and value < 1:
+
+            return #E51010
+
 
 def parse_tone(tone):
     eTones = ['disgust','fear','joy','sadness','anger']
